@@ -1,6 +1,6 @@
 # HMM
 
-implementation of a Hidden Markov Model in Python for CMSC170
+implementation of a Hidden Markov Model in Python
 
 
 Uses the following resources:
