@@ -24,16 +24,24 @@ Observable = PMatrix({'Rainy': r2, 'Sunny': s2})
 
 hmm = HiddenMarkovModel(Hidden, Observable, start)
 
-# Probability that the first observation is 'Walk'
-score(hmm,['Walk']) 
+# # Probability that the first observation is 'Walk'
+# score(hmm,['Walk']) 
 
-# Probability that the first observation is 'Shop'
-score(hmm,['Shop']) 
+# # Probability that the first observation is 'Shop'
+# score(hmm,['Shop']) 
 
-# Probability that the first observation is 'Clean'
-score(hmm,['Clean']) 
+# # Probability that the first observation is 'Clean'
+# score(hmm,['Clean']) 
 
-# Probability that the sequence 'Clean', 'Clean', 'Clean' occurs
-score(hmm,['Clean','Clean','Clean']) 
+# # Probability that the sequence 'Clean', 'Clean', 'Clean' occurs
+# score(hmm,['Clean','Clean','Clean']) 
+# score(hmm,['Shop','Clean','Walk']) 
+
+# Given the observation 'Shop', 'Clean', 'Walk', find the most likely weather
+probability, weather = hmm.decode(['Shop','Clean','Walk'])
+print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")
 
 
+# Given observation 'Clean', 'Clean', 'Clean', find the most likely weather
+probability, weather = hmm.decode(['Clean','Clean','Clean'])
+print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")

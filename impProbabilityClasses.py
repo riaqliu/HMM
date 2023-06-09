@@ -18,6 +18,7 @@ class PVector:
 
     def __getitem__(self, state: str) -> float:
         return float(self.values[0, self.states.index(state)])
+    
 
     
 class PMatrix:
