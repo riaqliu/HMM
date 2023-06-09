@@ -18,28 +18,25 @@ class HiddenMarkovModel:
             PMatrix(states, observables), \
             PVector(states)\
             )
-    
+    def extract_chain(self, c:list, observations, func) -> tuple[list]:
+        expandedChain = list(zip(c, [self.tM.states[0]] + list(c)))
+        expandedObser = list(zip(observations, c))
+        
+        pObservations = list(map(lambda x: self.eM.df.loc[x[1], x[0]], expandedObser))
+        pHiddenState = list(map(lambda x: self.tM.df.loc[x[1], x[0]], expandedChain))
+        pHiddenState[0] = self.iT[c[0]]
+
+        x = reduce(func, pObservations) * reduce(func, pHiddenState)
+
+        return (expandedChain, expandedObser, pObservations, pHiddenState, x)
     
     def score(self, observations: list) -> float:
-        def mul(x, y): return x * y
-
         score = 0
         chains = list(product(*(self.states,) * len(observations)))
-        # print(chains)
-        
+        def mul(x, y): return x * y
+
         for c in chains:
-            expanded_chain = list(zip(c, [self.tM.states[0]] + list(c)))
-            expanded_obser = list(zip(observations, c))
-            
-            p_observations = list(map(lambda x: self.eM.df.loc[x[1], x[0]], expanded_obser))
-            p_hidden_state = list(map(lambda x: self.tM.df.loc[x[1], x[0]], expanded_chain))
-            p_hidden_state[0] = self.iT[c[0]]
-
-            # print(expanded_chain)
-            # print(expanded_obser)
-
-            x = reduce(mul, p_observations) * reduce(mul, p_hidden_state)
-            # print(x)
+            x = self.extract_chain(c,observations, mul)[-1]
             score += x
         return score
     
@@ -49,15 +46,8 @@ class HiddenMarkovModel:
         chains = list(product(*(self.states,) * len(observations)))
         pList = list()
         for c in chains:
-            expanded_chain = list(zip(c, [self.tM.states[0]] + list(c)))
-            expanded_obser = list(zip(observations, c))
-            _, seq = zip(*expanded_obser)
-            
-            p_observations = list(map(lambda x: self.eM.df.loc[x[1], x[0]], expanded_obser))
-            p_hidden_state = list(map(lambda x: self.tM.df.loc[x[1], x[0]], expanded_chain))
-            p_hidden_state[0] = self.iT[c[0]]
-
-            x = reduce(mul, p_observations) * reduce(mul, p_hidden_state)
+            _, expandedObser, _, _, x = self.extract_chain(c,observations, mul)
+            seq = list(zip(*expandedObser))[1]
             pList.append((x, seq))
             
 
