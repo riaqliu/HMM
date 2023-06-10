@@ -4,7 +4,8 @@ from impHiddenMarkov import HiddenMarkovModel
 
 
 def score(hmm:HiddenMarkovModel, observations:list[str]) -> None:
-    print(f"Probability of the observation {observations} is {hmm.score(observations)}.")    
+    print(f"Probability of the observation {observations} is \
+           {hmm.score(observations)}.")    
 
 
 # Hidden States
@@ -35,13 +36,19 @@ hmm = HiddenMarkovModel(Hidden, Observable, start)
 
 # # Probability that the sequence 'Clean', 'Clean', 'Clean' occurs
 # score(hmm,['Clean','Clean','Clean']) 
-# score(hmm,['Shop','Clean','Walk']) 
 
 # Given the observation 'Shop', 'Clean', 'Walk', find the most likely weather
 probability, weather = hmm.decode(['Shop','Clean','Walk'])
 print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")
 
-
 # Given observation 'Clean', 'Clean', 'Clean', find the most likely weather
 probability, weather = hmm.decode(['Clean','Clean','Clean'])
+print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")
+
+# Given observation 'Clean', 'Clean', 'Clean', find the most likely weather
+probability, weather = hmm.decode(['Shop','Shop','Walk'])
+print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")
+
+# Given observation 'Clean', 'Clean', 'Clean', find the most likely weather
+probability, weather = hmm.decode(['Walk','Clean','Walk'])
 print(f"The weather was most likely {weather} with {probability*100.0:.5f}% probability")
