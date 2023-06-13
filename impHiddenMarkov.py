@@ -28,11 +28,6 @@ class HiddenMarkovModel:
 
         x = reduce(func, pObservations) * reduce(func, pHiddenState)
 
-        # print(expandedChain)
-        # print(expandedObser)
-        # print(pObservations)
-        # print(pHiddenState)
-
         return (expandedChain, expandedObser, pObservations, pHiddenState, x)
     
     def score(self, observations: list) -> float:
