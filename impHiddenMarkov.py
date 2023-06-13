@@ -11,14 +11,6 @@ class HiddenMarkovModel:
         self.states = self.iT.states
         self.observables = self.eM.observables
     
-    @classmethod
-    def initialize(cls, states: list, observables: list):
-        return cls(
-            PMatrix(states, states), 
-            PMatrix(states, observables), 
-            PVector(states)
-            )
-    
     def extract_chain(self, c:list, observations, func) -> tuple[list]:
         expandedChain = list(zip(c, [self.tM.states[0]] + list(c)))
         expandedObser = list(zip(observations, c))
