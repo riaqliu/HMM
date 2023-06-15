@@ -1,7 +1,6 @@
 from __future__ import annotations
 from impHiddenMarkov import HiddenMarkovModel
 from impProbabilityClasses import PVector, PMatrix
-from itertools import product
 
 
 
@@ -38,5 +37,35 @@ if __name__ == "__main__":
     Observable = PMatrix({'Rainy': r2, 'Sunny': s2})
 
     hmm = FAHiddenMarkovModel(Hidden, Observable, start)
-    # score(hmm,['Walk']) 
+
+    # Probability that the first observation is 'Walk'
+    score(hmm,['Walk']) 
+
+    # # Probability that the first observation is 'Shop'
+    score(hmm,['Shop']) 
+
+    # # Probability that the first observation is 'Clean'
+    score(hmm,['Clean']) 
+
+    # # Probability that the sequence 'Clean', 'Clean', 'Clean' occurs
     score(hmm,['Clean','Clean','Clean']) 
+
+    #     # Hidden States
+    # r1 = PVector({'Rainy':0.5, 'Sunny':0.5})
+    # s1 = PVector({'Rainy':0.3, 'Sunny':0.7})
+
+    # # Observable States
+    # r2 = PVector({'Happy':0.2, 'Sad':0.8})
+    # s2 = PVector({'Happy':0.6, 'Sad':0.4})
+
+    # # Start
+    # start = PVector({'Rainy':0.375, 'Sunny':0.625})
+
+    # # Matrices
+    # Hidden = PMatrix({'Rainy': r1, 'Sunny': s1})
+    # Observable = PMatrix({'Rainy': r2, 'Sunny': s2})
+
+    # hmm = FAHiddenMarkovModel(Hidden, Observable, start)
+
+    # # Probability that the first observation is 'Walk'
+    # score(hmm,['Sad','Sad','Happy']) 

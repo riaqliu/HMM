@@ -30,7 +30,7 @@ class HiddenMarkovModel:
             x = self.extract_chain(c,observations, mul)[-1]
             score += x
         return score
-    
+
     def decode(self, observations:list) -> tuple[float, list]:
         def mul(x,y): return x * y
 
@@ -40,6 +40,9 @@ class HiddenMarkovModel:
             _, expandedObser, _, _, x = self.extract_chain(c,observations, mul)
             seq = list(zip(*expandedObser))[1]
             pList.append((x, seq))
+        
+        print(sum([x[0] for x in pList]))
+        
         return max(pList, key=lambda k : k[0])
 
 # TODO: implement methods to answer problem 3 in
